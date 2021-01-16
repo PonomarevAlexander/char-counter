@@ -1,12 +1,16 @@
 package org.foxminded.charcounter.gears;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Splitter {
 
-    public String[] splitString(String actual) {
-        return actual.split(" ");
-    }
-    
-    public char[] getCharsArrayOfWordByIndex(String[] words, int index) {
-        return words[index].toCharArray(); 
-    }
+    public List<String> splitString(String actual) {
+        List<String> separatedString = new ArrayList<>();
+        separatedString.addAll(Arrays.asList(actual.split(",")));
+        return separatedString;
+    }   
 }
+    
+
