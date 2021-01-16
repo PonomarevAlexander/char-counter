@@ -11,7 +11,19 @@ public class WordStorage {
         this.wordsStorage = new HashMap<>();
     }
     
-    public void putToStorageIfAbscent(String word, Map<Character, Integer> letterCounts) {
-        wordsStorage.putIfAbsent(word, (HashMap<Character, Integer>) letterCounts);
+    public void putToStorage(String word, Map<Character, Integer> amount) {
+        wordsStorage.putIfAbsent(word, (HashMap<Character, Integer>) amount);
+    }
+    
+    public boolean checkToContains(String key) {
+        boolean flag = false;
+        if (wordsStorage.containsKey(key)) {
+            flag = true;
+        }
+        return flag;
+    }
+    
+    public Map<Character, Integer> getWord(String word) {
+        return wordsStorage.get(word);
     }
 }
