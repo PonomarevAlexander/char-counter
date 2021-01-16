@@ -1,7 +1,6 @@
 package org.foxminded.charcounter.gears;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Counter {
@@ -12,9 +11,10 @@ public class Counter {
         this.countedChars = new HashMap<>();
     }
     
-    public Map<Character, Integer> toCountCharacters(List<String> stringList, int index) {
-        if (!stringList.isEmpty()) {
-            char[] letters = stringList.get(index).toCharArray();
+    public Map<Character, Integer> toCountCharacters(String subString) {
+        countedChars.clear();
+        if (!subString.isEmpty()) {
+            char[] letters = subString.toCharArray();
             for (int i = 0; i < letters.length; i++) {
                 for (int j = 0; j < letters.length; j++) {
                     if (letters[i] == letters[j]) {
