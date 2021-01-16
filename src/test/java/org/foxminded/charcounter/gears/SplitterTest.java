@@ -2,15 +2,17 @@ package org.foxminded.charcounter.gears;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.util.Arrays;
 
 class SplitterTest {
     
     Splitter splitter;
     private static final String HELLO_WORLD = "hello world!";
-    private static final String[] SPLITTED_HELLO_WORLD = {"hello", "world!"};
+    private static final List<String> SPLITTED_HELLO_WORLD = Arrays.asList("hello", "world!");
     
     @BeforeEach
     void init() {
@@ -19,15 +21,9 @@ class SplitterTest {
 
     @Test
     void testSplitString() {
-        String[] actual = splitter.splitString(HELLO_WORLD);
-        assertEquals(Arrays.toString(SPLITTED_HELLO_WORLD), Arrays.toString(actual));
+        List<String> actual = new ArrayList<>();
+        actual.addAll(Arrays.asList(HELLO_WORLD.split(" ")));
+        assertEquals(SPLITTED_HELLO_WORLD, actual);
         
-    }
-
-    @Test
-    void testGetCharsArrayOfWordByIndex() {
-        char[] actual = splitter.getCharsArrayOfWordByIndex(SPLITTED_HELLO_WORLD, 0);
-        char[] expected = {'h', 'e', 'l', 'l', 'o'};
-        assertEquals(Arrays.toString(expected), Arrays.toString(actual));
     }
 }
