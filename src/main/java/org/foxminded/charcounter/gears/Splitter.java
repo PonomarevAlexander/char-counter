@@ -8,7 +8,7 @@ public class Splitter {
 
     public List<String> splitString(String actual) {
         List<String> separatedString = new ArrayList<>();
-        separatedString.addAll(Arrays.asList(actual.split(",")));
+        separatedString.addAll(Arrays.asList(actual.split(" ")));
         return separatedString;
     }   
 }
