@@ -6,9 +6,11 @@ import java.util.List;
 
 public class Splitter {
 
-    public List<String> splitString(String actual) {
+    private static final String SPLIT_REGEX = "\\s*[^a-zA-Z]+\\s*";
+    
+    public List<String> splitString(String sourceString) {
         List<String> separatedString = new ArrayList<>();
-        separatedString.addAll(Arrays.asList(actual.split(" ")));
+        separatedString.addAll(Arrays.asList(sourceString.split(SPLIT_REGEX)));
         return separatedString;
     }   
 }
