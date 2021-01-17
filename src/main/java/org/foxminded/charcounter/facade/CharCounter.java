@@ -5,41 +5,40 @@ import java.util.List;
 import java.util.Map;
 import org.foxminded.charcounter.gears.*;
 
+public class CharCounter {
 
-public class Facade {
-
-    private static Facade facade;
+    private static CharCounter facadeInstance;
     private Splitter splitter = new Splitter();
     private Counter counter = new Counter();
     private WordStorage storage = new WordStorage();
     private Formatter formatter = new Formatter();
     private Map<Character, Integer> resultData = new HashMap<>();
 
-    private Facade() {
+    private CharCounter() {
     }
     
-    public static Facade getFacade() {
-        if (Facade.facade == null) {
-            facade = new Facade();
+    public static CharCounter getCharCounterInstance() {
+        if (CharCounter.facadeInstance == null) {
+            facadeInstance = new CharCounter();
         }
-        return facade;
+        return facadeInstance;
     }
 
-    public String countLetters(String source) {
-        List<String> subStringList = splitter.splitString(source);
+    public String countCharacters(String sourceString) {
+        List<String> subStringList = splitter.splitString(sourceString);
         
         for (String subString : subStringList) {
             if (storage.checkToContains(subString)) {
-                facade.mergeData(storage.getWord(subString));
+                mergeAmount(storage.getWord(subString));
             } else {
-                mergeData(counter.toCountCharacters(subString));
+                mergeAmount(counter.toCountCharacters(subString));
                 storage.putToStorage(subString, counter.toCountCharacters(subString));
             }
         }
         return formatter.formatToPrint(resultData).toString();
     }
     
-    private void mergeData(Map<Character, Integer> data) {
+    private void mergeAmount(Map<Character, Integer> data) {
         data.forEach((letter, amount) -> resultData.computeIfPresent(letter, (key, value) -> amount + value));
         data.forEach((letter, amount) -> resultData.putIfAbsent(letter, amount));   
     }
