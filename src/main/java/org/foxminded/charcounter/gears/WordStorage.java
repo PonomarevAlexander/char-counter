@@ -1,18 +1,15 @@
 package org.foxminded.charcounter.gears;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class WordStorage {
     
-    private Map<String, HashMap<Character, Integer>> wordsStorage;
-    
-    public WordStorage() {
-        this.wordsStorage = new HashMap<>();
-    }
+    private Map<String, LinkedHashMap<Character, Integer>> wordsStorage = new HashMap<>();
     
     public void putToStorage(String word, Map<Character, Integer> amount) {
-        wordsStorage.putIfAbsent(word, (HashMap<Character, Integer>) amount);
+        wordsStorage.putIfAbsent(word, (LinkedHashMap<Character, Integer>) amount);
     }
     
     public boolean checkToContains(String key) {
