@@ -1,13 +1,26 @@
 package org.foxminded.charcounter.facade;
 
+import java.util.Scanner;
+
 public class Main {
-    private static final String SENTENCE = "hello world";
+    
+    private static final String INVITE = "Type some string for counting...";
+    private static final String NEW_LINE = "\n";
+    private static final String EMPTY_STRING_EXCEPTION_MESSAGE = "You are tryed count empty string";
 
     public static void main(String[] args) {
         
-        Facade facade = Facade.getFacade();
+        CharCount charCounter = new CharCount();
+        Scanner scanner = new Scanner(System.in);
         
-        System.out.println(facade.countLetters(SENTENCE));
+        try {
+            System.out.println(INVITE);
+            String input = scanner.nextLine();
+            String result = charCounter.countCharacters(input);
+            System.out.println(NEW_LINE + input + NEW_LINE + result);
+            scanner.close();
+        } catch (IllegalArgumentException ex) {
+            System.out.println(NEW_LINE + EMPTY_STRING_EXCEPTION_MESSAGE);
+        }
     }
-
 }
