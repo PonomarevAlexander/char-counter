@@ -12,9 +12,10 @@ public class CharCount {
     private WordStorage storage = new WordStorage();
     private Formatter formatter = new Formatter();
     private Map<Character, Integer> totalCharsAmount = new LinkedHashMap<>();
+    private static final String EMPTY_STRING = "";
 
     public String countCharacters(String sourceString) {
-        if (sourceString.equals("")) {
+        if (sourceString.equals(EMPTY_STRING)) {
             throw new IllegalArgumentException();
         }
         

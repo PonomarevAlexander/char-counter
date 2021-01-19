@@ -1,17 +1,15 @@
 package org.foxminded.charcounter.facade;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 import org.mockito.Mock;
-
 import org.foxminded.charcounter.gears.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InOrder;
 import org.mockito.InjectMocks;
-import static org.mockito.Mockito.*;
 import java.util.Map;
-
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)

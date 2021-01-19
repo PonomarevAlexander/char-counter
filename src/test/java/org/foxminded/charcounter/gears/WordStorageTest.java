@@ -1,9 +1,7 @@
 package org.foxminded.charcounter.gears;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedHashMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +10,7 @@ class WordStorageTest {
     WordStorage storage;
     private static final String KEY = "foxminded";
     private static final String KEY_NEW_WORD = "test";
-    private static final Map<Character, Integer> CHARS_AMOUNTS = new HashMap<Character, Integer>() {{
+    private static final LinkedHashMap<Character, Integer> CHARS_AMOUNTS = new LinkedHashMap<Character, Integer>() {{
         put('f', 1);
         put('o', 1);
         put('x', 1);
