@@ -3,6 +3,7 @@ package org.foxminded.charcounter.gears;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,29 +11,34 @@ import org.junit.jupiter.api.Test;
 class CounterTest {
     
     private Counter counter;
-    private Map<Character, Integer> expectedCharMap = new HashMap<>();
-    private static final String HELLO_WORLD = "hello";
-    private static final String EMPTY_STRING = "";
+    private Map<Character, Integer> charData = new LinkedHashMap<>();
+    private Map<Character, Integer> specSymbolsData = new LinkedHashMap<>();
+    
+    private static final String ONE_WORD = "hello";
+    private static final String FOUR_WORD = "hello world, hello world";
     
     @BeforeEach
     void init() {
         counter = new Counter();
-        expectedCharMap.put('h', 1);
-        expectedCharMap.put('e', 1);
-        expectedCharMap.put('l', 2);
-        expectedCharMap.put('o', 1);
+        charData.put('h', 1);
+        charData.put('e', 1);
+        charData.put('l', 2);
+        charData.put('o', 1);
+        specSymbolsData.put(' ', 3);
+        specSymbolsData.put(',', 1);
+        
     }
 
     @Test
     void testToCountCharacters() {
-        Map<Character, Integer> actual = counter.toCountCharacters(HELLO_WORLD);
-        assertEquals(expectedCharMap, actual);
-        assertEquals(4, expectedCharMap.size());
+        Map<Character, Integer> actual = counter.toCountCharacters(ONE_WORD);
+        assertEquals(charData, actual);
+        assertEquals(4, charData.size());
     }
     
     @Test
-    void testShouldThrowExceptionIfIncomingStringIsEmpty() {
-        assertThrows(IllegalArgumentException.class, () -> {counter.toCountCharacters(EMPTY_STRING);});
+    void testCountSpecSymbols() {
+        Map<Character, Integer> actual = counter.countSpecSymbols(FOUR_WORD);
+        assertEquals(specSymbolsData, actual);
     }
-
 }
