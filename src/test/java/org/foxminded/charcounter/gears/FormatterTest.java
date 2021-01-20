@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 class FormatterTest {
     
-    Formatter formatter;
+    CharCountFormatter formatter;
     private Map<Character, Integer> incomingMap = new HashMap<>();
     private static final String EXPECTED = "\"e\" - 1\n"
             + "\"h\" - 1\n"
@@ -17,7 +17,7 @@ class FormatterTest {
 
     @BeforeEach
     void init() {
-        formatter = new Formatter();
+        formatter = new CharCountFormatter();
         incomingMap.put('h', 1);
         incomingMap.put('e', 1);
         incomingMap.put('l', 2);

@@ -40,7 +40,7 @@ class CharCountTest {
     private WordStorage storage;
     
     @Mock
-    private Formatter formatter;
+    private CharCountFormatter formatter;
     
     @Mock
     private Map<Character, Integer> charsAmountStubb;

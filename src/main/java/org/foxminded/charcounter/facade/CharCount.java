@@ -1,40 +1,29 @@
 package org.foxminded.charcounter.facade;
 
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
+
 import org.foxminded.charcounter.gears.*;
 
 public class CharCount {
 
-    private Splitter splitter = new Splitter();
     private Counter counter = new Counter();
     private WordStorage storage = new WordStorage();
-    private Formatter formatter = new Formatter();
-    private Map<Character, Integer> totalCharsAmount = new LinkedHashMap<>();
+    private CharCountFormatter formatter = new CharCountFormatter();
+    private static final String EMPTY_STRING_EXCEPTION_MESSAGE = "You are tryed count empty string";
     private static final String EMPTY_STRING = "";
 
     public String countCharacters(String sourceString) {
+        Map<Character, Integer> result;
         if (sourceString.equals(EMPTY_STRING)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(EMPTY_STRING_EXCEPTION_MESSAGE);
         }
         
-        List<String> subStringList = splitter.splitString(sourceString);
-        
-        for (String subString : subStringList) {
-            if (storage.checkToContains(subString)) {
-                mergeAmount(storage.getWord(subString));
-            } else {
-                mergeAmount(counter.toCountCharacters(subString));
-                storage.putToStorage(subString, counter.toCountCharacters(subString));
-            }
+        if (storage.checkToContains(sourceString)) {
+            result = storage.get(sourceString);
+        } else {
+            result = counter.toCountCharacters(sourceString);
+            storage.putToStorage(sourceString, result);
         }
-        mergeAmount(counter.countSpecSymbols(sourceString));
-        return formatter.formatToPrint(totalCharsAmount);
-    }
-    
-    private void mergeAmount(Map<Character, Integer> incomingData) {
-        incomingData.forEach((letter, amount) -> totalCharsAmount.computeIfPresent(letter, (key, value) -> amount + value));
-        incomingData.forEach((letter, amount) -> totalCharsAmount.putIfAbsent(letter, amount));   
-    }   
+        return formatter.formatToPrint(result);
+    }  
 }

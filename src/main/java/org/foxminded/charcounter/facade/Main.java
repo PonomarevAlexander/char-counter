@@ -6,7 +6,6 @@ public class Main {
     
     private static final String INVITE = "Type some string for counting...";
     private static final String NEW_LINE = "\n";
-    private static final String EMPTY_STRING_EXCEPTION_MESSAGE = "You are tryed count empty string";
 
     public static void main(String[] args) {
         
@@ -20,7 +19,7 @@ public class Main {
             System.out.println(NEW_LINE + input + NEW_LINE + result);
             scanner.close();
         } catch (IllegalArgumentException ex) {
-            System.out.println(NEW_LINE + EMPTY_STRING_EXCEPTION_MESSAGE);
+            System.out.println(ex.getMessage());
         }
     }
 }

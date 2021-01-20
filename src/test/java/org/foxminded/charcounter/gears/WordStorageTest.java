@@ -35,7 +35,7 @@ class WordStorageTest {
     
     @Test
     void testGetWord() {
-        assertEquals(CHARS_AMOUNTS, storage.getWord(KEY));
-        assertEquals(8, storage.getWord(KEY).size());
+        assertEquals(CHARS_AMOUNTS, storage.get(KEY));
+        assertEquals(8, storage.get(KEY).size());
     }
 }
