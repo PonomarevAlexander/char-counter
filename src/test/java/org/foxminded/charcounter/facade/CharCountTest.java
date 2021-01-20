@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InOrder;
 import org.mockito.InjectMocks;
+
+import java.util.LinkedHashMap;
 import java.util.Map;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -17,21 +19,20 @@ class CharCountTest {
     
     private static final String SOURCE_STRING = "there is facade test";
     private static final String EMPTY_STRING = "";
+    private static Map<Character, Integer> map = new LinkedHashMap<>();
     private static final String EXPECTED = "\"t\" - 3\n"
             + "\"h\" - 1\n"
             + "\"e\" - 4\n"
             + "\"r\" - 1\n"
+            + "\" \" - 3\n"
             + "\"i\" - 1\n"
             + "\"s\" - 2\n"
             + "\"f\" - 1\n"
             + "\"a\" - 2\n"
             + "\"c\" - 1\n"
-            + "\"d\" - 1\n"
-            + "\" \" - 3\n";
+            + "\"d\" - 1\n";
     private CharCount cc;
-
-    @Mock
-    private Splitter splitter;
+    
     
     @Mock
     private Counter counter;
@@ -41,31 +42,55 @@ class CharCountTest {
     
     @Mock
     private CharCountFormatter formatter;
-    
-    @Mock
-    private Map<Character, Integer> charsAmountStubb;
+
     
     @InjectMocks
     private CharCount charCount = new CharCount();
     
     
     @Test
-    void testTimesInvokationMethodsWithoutLoop() {
+    void testTimesCallMethodsIfStringDoesntFindInStorage() {
+        when(storage.checkToContains(SOURCE_STRING)).thenReturn(false);
         charCount.countCharacters(SOURCE_STRING);
         
-        verify(splitter).splitString(SOURCE_STRING);
-        verify(counter).countSpecSymbols(SOURCE_STRING);
-        verify(formatter).formatToPrint(charsAmountStubb);
+        verify(storage).checkToContains(SOURCE_STRING);
+        verify(counter).toCountCharacters(SOURCE_STRING);
+        verify(storage).putToStorage(SOURCE_STRING, map);
+        verify(formatter).formatToPrint(map);
     }
     
     @Test
-    void testOrderInvokeMethodsWhithoutLoop() {
-        InOrder inOrder = inOrder(splitter, counter, formatter);
+    void testTimesCallMethodsIfStorageHaveAString() {
+        when(storage.checkToContains(SOURCE_STRING)).thenReturn(true);
         charCount.countCharacters(SOURCE_STRING);
         
-        inOrder.verify(splitter).splitString(SOURCE_STRING);
-        inOrder.verify(counter).countSpecSymbols(SOURCE_STRING);
-        inOrder.verify(formatter).formatToPrint(charsAmountStubb);
+        verify(storage).checkToContains(SOURCE_STRING);
+        verify(storage).get(SOURCE_STRING);
+        verify(formatter).formatToPrint(map);
+        
+    }
+    
+    @Test
+    void testOrderInvokationIfStringDoesNotFoundInStorage() {
+        InOrder inOrder = inOrder(storage, counter, formatter);
+        when(storage.checkToContains(SOURCE_STRING)).thenReturn(false);
+        charCount.countCharacters(SOURCE_STRING);
+        
+        inOrder.verify(storage).checkToContains(SOURCE_STRING);
+        inOrder.verify(counter).toCountCharacters(SOURCE_STRING);
+        inOrder.verify(storage).putToStorage(SOURCE_STRING, map);
+        inOrder.verify(formatter).formatToPrint(map);
+    }
+    
+    @Test
+    void testOrderInvokationIfStringWasFoundInStorage() {
+        InOrder inOrder = inOrder(storage, formatter);
+        when(storage.checkToContains(SOURCE_STRING)).thenReturn(true);
+        charCount.countCharacters(SOURCE_STRING);
+        
+        inOrder.verify(storage).checkToContains(SOURCE_STRING);
+        inOrder.verify(storage).get(SOURCE_STRING);
+        inOrder.verify(formatter).formatToPrint(map);  
     }
     
     @BeforeEach
